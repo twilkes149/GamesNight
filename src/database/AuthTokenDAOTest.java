@@ -2,6 +2,10 @@ package database;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.UUID;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,11 +19,19 @@ public class AuthTokenDAOTest {
 	public static void init() {
 		authTokenDriver = new AuthTokenDAO("test");
 		token = new AuthToken();
+		
+		token.setValue(UUID.randomUUID());
+		token.setUserLink(UUID.randomUUID());
+		token.setExDate(LocalDate.now());
+		token.setExTime(LocalTime.now().plusHours(1));
+		
+		authTokenDriver.saveAuthToken(token);
+		
 	}
 	
 	@Test
 	public void testSaveToken() {
-		assertTrue(authTokenDriver.saveAuthToken(new AuthToken()));
+		assertTrue(authTokenDriver.saveAuthToken(token));
 	}
 	
 	@Test

@@ -14,7 +14,7 @@ import model.AuthToken;
 public class AuthTokenDAO extends Setup{
 
 	public AuthTokenDAO(String databaseName) {
-		this.databaseName = databaseName;
+		Setup.databaseName = databaseName;
 	}
 	
 	/**
@@ -41,6 +41,9 @@ public class AuthTokenDAO extends Setup{
 			connection.setAutoCommit(false);
 			prep.executeBatch();
 			connection.setAutoCommit(true);
+			
+			prep.close();
+			connection.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -63,7 +66,7 @@ public class AuthTokenDAO extends Setup{
 		Connection connection = Setup.getConnection(databaseName);
 		try {
 			Statement stat = connection.createStatement();
-			ResultSet rs = stat.executeQuery("SELECT * FROM user WHERE value='" + value + "';");
+			ResultSet rs = stat.executeQuery("SELECT * FROM AuthToken WHERE value='" + value + "';");
 			if (rs.next()) {
 				UUID id = UUID.fromString(rs.getString(1));
 				int min = rs.getInt(2);
@@ -76,6 +79,9 @@ public class AuthTokenDAO extends Setup{
 				LocalDate exDate = LocalDate.of(year, month, day);
 				LocalTime exTime = LocalTime.of(hour, min);
 				result = new AuthToken(id, exTime, exDate, userLink);
+				
+				rs.close();
+				connection.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,7 +96,21 @@ public class AuthTokenDAO extends Setup{
 	 * @return true if successful, false otherwise
 	 */
 	public boolean deleteAuthToken(String value) {
-		return false;
+		if (value == null || value.length() < 1)
+			return false;
+		Connection connection = Setup.getConnection(databaseName);
+		try {
+			Statement stat = connection.createStatement();
+			stat.executeUpdate("DELETE FROM AuthToken WHERE value ='" + value +"';");
+			stat.close();
+			connection.close();
+			
+		} catch (SQLException e) {		
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -99,6 +119,9 @@ public class AuthTokenDAO extends Setup{
 	 * @return true if successful, false otherwise
 	 */
 	public boolean deleteAuthToken(AuthToken token) {
-		return false;
+		if (token == null || token.getValue() == null)
+			return false;
+		else
+			return deleteAuthToken(token.getValue().toString());
 	}
 }

@@ -22,7 +22,7 @@ public class AuthToken {
 	public AuthToken(UUID id, LocalTime exTime, LocalDate exDate, UUID userLink) {
 		value = id;
 		this.exTime = exTime;
-		this.exDate = date;
+		this.exDate = exDate;
 		this.userLink = userLink;
 	}
 	

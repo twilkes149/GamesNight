@@ -1,6 +1,7 @@
 package model;
 
 import java.util.UUID;
+import java.time.LocalDate;
 
 public class User {
 	private String firstName;
@@ -10,6 +11,7 @@ public class User {
 	private String email;
 	private UUID ID;
 	private AuthToken token;
+	private LocalDate startDate;
 	
 	public User() {
 		this.firstName = null;
@@ -19,28 +21,33 @@ public class User {
 		this.email = null;
 		this.ID = null;
 		this.token = null;
+		this.startDate = null;
 	}
 	
 	public User(String userName) {
 		this.userName = userName;
 	}
 	
-	public User(String firstName, String lastName, String userName, String password, String email) {
+	public User(String firstName, String lastName, String userName, String password, String email, LocalDate startDate) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
+		this.startDate = startDate;
+	}
+	
+	public String combineUserInfo(){
+		return firstName+lastName+userName+password+email+startDate;
 	}
 	
 	public UUID getID() {
 		return ID;
 	}
-
 	public void setID(UUID iD) {
 		ID = iD;
 	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -58,7 +65,7 @@ public class User {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
+	}	
 	public String getPassword() {
 		return password;
 	}
@@ -77,6 +84,11 @@ public class User {
 	public void setToken(AuthToken token) {
 		this.token = token;
 	}
-	
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}	
+	public LocalDate getStartDate(){
+		return startDate;
+	}
 
 }

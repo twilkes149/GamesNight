@@ -12,9 +12,15 @@ import model.Email;
 import model.User;
 
 public class UserDAO extends Setup{
+	private AuthTokenDAO authTokenDriver;
 	
 	public UserDAO(String databaseName) {
 		this.databaseName = databaseName;
+		this.init(databaseName);
+		authTokenDriver = new AuthTokenDAO(databaseName);
+	}
+	
+	public UserDAO() {
 	}
 	
 	/**

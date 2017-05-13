@@ -26,6 +26,7 @@ public class User {
 	
 	public User(String userName) {
 		this.userName = userName;
+		ID = UUID.randomUUID();
 	}
 	
 	public User(String firstName, String lastName, String userName, String password, Email email, LocalDate startDate) {
@@ -35,6 +36,10 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.startDate = startDate;
+		
+		this.ID = UUID.randomUUID();
+		this.token = new AuthToken();
+		token.setUserLink(ID);
 	}
 	
 	public User(String firstName, String lastName, String userName, String password, String email, LocalDate startDate) throws IllegalArgumentException{
@@ -44,6 +49,9 @@ public class User {
 		this.password = password;
 		this.email = new Email(email);
 		this.startDate = startDate;
+		
+		this.ID = UUID.randomUUID();
+		this.token = new AuthToken();
 	}
 	
 	public String combineUserInfo(){

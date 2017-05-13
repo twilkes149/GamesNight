@@ -14,7 +14,11 @@ import model.AuthToken;
 public class AuthTokenDAO extends Setup{
 
 	public AuthTokenDAO(String databaseName) {
-		Setup.databaseName = databaseName;
+		this.databaseName = databaseName;
+		this.init(databaseName);
+	}
+	
+	public AuthTokenDAO() {
 	}
 	
 	/**

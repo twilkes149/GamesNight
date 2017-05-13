@@ -12,6 +12,14 @@ public class RegisterInput extends Input{
 	private String password;
 	private String email;
 	
+	public RegisterInput(String firstName, String lastName, String userName, String password, String email) {
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

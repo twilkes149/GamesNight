@@ -9,7 +9,35 @@ public class RegisterResponse extends Response {
 	private String authToken;
 	private String userName;
 	private String userID;
+	private boolean error;
+	private String errorMessage;
 	
+	public RegisterResponse(String message) {
+		error = true;
+		errorMessage = message;
+	}
+	
+	public RegisterResponse(String userName, String authToken, String userID) {
+		this.userName = userName;
+		this.authToken = authToken;
+		this.userID = userID;
+	}
+	
+	public boolean getError() {
+		return error;
+	}
+	public void setError(boolean error) {
+		this.error = error;
+	}
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
 	public String getAuthToken() {
 		return authToken;
 	}
@@ -29,6 +57,8 @@ public class RegisterResponse extends Response {
 		this.userID = userID;
 	}
 	
-	
+	public String toString() {
+		return userName + ": " + userID + ", " + authToken;
+	}
 
 }

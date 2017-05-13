@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.UUID;
 
 import model.AuthToken;
+import model.Email;
 import model.User;
 
 public class UserDAO extends Setup{
@@ -32,7 +33,7 @@ public class UserDAO extends Setup{
 			prep.setString(3, user.getLastName());
 			prep.setString(4, user.getUserName());
 			prep.setString(5, user.getPassword());
-			prep.setString(6, user.getEmail());
+			prep.setString(6, user.getEmail().toString());
 			prep.addBatch();
 			
 			connection.setAutoCommit(false);
@@ -65,13 +66,16 @@ public class UserDAO extends Setup{
 				String lastName = rs.getString(3);
 				String un = rs.getString(4);
 				String password = rs.getString(5);
-				String email = rs.getString(6);
+				Email email = new Email(rs.getString(6));
 				
-				result = new User(firstName, lastName, un, password, email);
+				result = new User(firstName, lastName, un, password, email, null);//temp fix
 				result.setID(id);
 				rs.close();
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		finally {
@@ -101,14 +105,17 @@ public class UserDAO extends Setup{
 				String lastName = rs.getString(3);
 				String un = rs.getString(4);
 				String password = rs.getString(5);
-				String email = rs.getString(6);
+				Email email = new Email(rs.getString(6));
 				
-				result = new User(firstName, lastName, un, password, email);
+				result = new User(firstName, lastName, un, password, email, null);//temp fix
 				result.setID(id);
 				rs.close();
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		catch (IllegalArgumentException e)  {
 			e.printStackTrace();
 		}
 		finally {

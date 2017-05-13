@@ -80,6 +80,9 @@ public class Setup {
 			Statement stat = connection.createStatement();
 			stat.executeUpdate("drop table if exists user;");
 			stat.executeUpdate("drop table if exists authToken;");
+			
+			createTables();
+			connection.close();
 			return true;
 		}
 		catch (SQLException e) {

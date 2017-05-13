@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -19,6 +20,11 @@ public class UserDAOTest{
 		userDriver = new UserDAO("test");
 		id = UUID.randomUUID();
 	}
+	
+	@Before
+	public void clearDatabase() {
+		userDriver.clear();
+	}
 
 	@Test
 	public void testSaveNullUser() {
@@ -27,7 +33,7 @@ public class UserDAOTest{
 	
 	@Test
 	public void testSaveUser() {
-		User user = new User("tucker", "wilkes", "twilkes", "password", "email");
+		User user = new User("tucker", "wilkes", "twilkes", "password", "email@email.com", null);//temp fix
 		user.setID(id);
 		assertTrue(userDriver.saveUser(user));
 	}
@@ -41,13 +47,19 @@ public class UserDAOTest{
 	public void testAuthToken() {
 		AuthToken token = new AuthToken();
 		token.setUserLink(id);
+		
+		User user = new User("tucker", "wilkes", "twilkes", "password", "email@email.com", null);//temp fix
+		user.setID(id);
+		userDriver.saveUser(user);
+		
 		assertTrue(userDriver.getUser(token) != null);
 	}
 	
 	@Test
 	public void testUserName() {
-		User user = new User("tucker", "wilkes", "twilkes", "password", "email");
+		User user = new User("tucker", "wilkes", "twilkes", "password", "email@email.com", null);//temp fix
 		user.setID(id);
+		userDriver.saveUser(user);
 		assertTrue(userDriver.getUser(user.getUserName()) != null);
 	}
 

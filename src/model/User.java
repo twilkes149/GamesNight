@@ -8,7 +8,7 @@ public class User {
 	private String lastName;
 	private String userName;
 	private String password;
-	private String email;
+	private Email email;
 	private UUID ID;
 	private AuthToken token;
 	private LocalDate startDate;
@@ -28,12 +28,21 @@ public class User {
 		this.userName = userName;
 	}
 	
-	public User(String firstName, String lastName, String userName, String password, String email, LocalDate startDate) {
+	public User(String firstName, String lastName, String userName, String password, Email email, LocalDate startDate) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
+		this.startDate = startDate;
+	}
+	
+	public User(String firstName, String lastName, String userName, String password, String email, LocalDate startDate) throws IllegalArgumentException{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.email = new Email(email);
 		this.startDate = startDate;
 	}
 	
@@ -72,10 +81,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getEmail() {
+	public Email getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(Email email) {
 		this.email = email;
 	}
 	public AuthToken getToken() {
